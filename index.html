@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SSAG Holdings Group – Business Systems & Automation Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="SSAG Holdings Group builds business systems, automation, and growth infrastructure for service-based businesses locally and online." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>SSAG Holdings Group</h1>
+      <p>The Company That Builds Companies.</p>
+
+      <nav class="nav">
+        <a href="#about">About</a>
+        <a href="#brands">Brands</a>
+        <a href="#services">What We Build</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero" id="about">
+      <h2>We build the infrastructure that grows service businesses.</h2>
+      <p>
+        SSAG Holdings Group is a parent company that designs operations, automation workflows,
+        franchise systems, and marketing foundations for businesses across the US and beyond.
+        If your business needs structure, customers, or funding readiness—SSAG builds the system.
+      </p>
+      <div class="cta-row">
+        <a href="#brands" class="btn-primary">Explore Our Companies</a>
+        <a href="#contact" class="btn-outline">Request a Strategy Call</a>
+      </div>
+    </section>
+
+    <section class="section" id="brands">
+      <h3>Our Brands</h3>
+      <p class="lead">Three specialized brands that can work alone—or together as one ecosystem.</p>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <span class="badge">Marketing & Growth</span>
+          <h4>AscendEdge Media Group</h4>
+          <p>Marketing systems, ads, funnels, and automation that help local and online businesses turn attention into customers.</p>
+          <p class="price">
+            <a href="https://cezarmorris2021.github.io/ascendedge-site/" target="_blank">Visit AscendEdge →</a>
+          </p>
+        </div>
+
+        <div class="card">
+          <span class="badge">Funding Readiness</span>
+          <h4>EdgeForce Digital Capital</h4>
+          <p>Business credit education and funding readiness guidance so owners can approach lenders more confidently.</p>
+          <p class="price">
+            <a href="https://cezarmorris2021.github.io/edgeforce-site/" target="_blank">Visit EdgeForce →</a>
+          </p>
+        </div>
+
+        <div class="card">
+          <span class="badge">Systems & Automation</span>
+          <h4>SSAG Systems & Automation</h4>
+          <p>Internal systems arm that builds SOPs, intake flows, automations, pipelines, and franchise frameworks for you and your clients.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <h3>What SSAG Builds</h3>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <h4>Business Systems Design</h4>
+          <p>Operational structure, checklists, SOPs, onboarding flows, and workflow mapping so teams know exactly what to do.</p>
+        </div>
+        <div class="card">
+          <h4>Automation & CRM Foundations</h4>
+          <p>Lead pipelines, simple automations, reminders, and follow-up so every opportunity is tracked from first contact to repeat customer.</p>
+        </div>
+        <div class="card">
+          <h4>Franchise & Licensing Frameworks</h4>
+          <p>Franchise-style manuals, playbooks, and packages that make your business easier to duplicate, expand, or license to others.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <h3>Contact SSAG</h3>
+      <p class="lead">
+        Tell us briefly about your business and what you want to improve.
+        We work with both local and fully online businesses.
+      </p>
+
+      <form action="https://formsubmit.co/SSAG.Enterprises@gmail.com" method="POST" class="card" style="padding:20px;">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_subject" value="New SSAG Holdings Inquiry">
+
+        <label>Name:</label>
+        <input type="text" name="name" required style="width:100%;padding:10px;margin:5px 0 12px;">
+
+        <label>Email:</label>
+        <input type="email" name="email" required style="width:100%;padding:10px;margin:5px 0 12px;">
+
+        <label>Business / Location (optional):</label>
+        <input type="text" name="business" placeholder="e.g. Cleaning company – Arizona" style="width:100%;padding:10px;margin:5px 0 12px;">
+
+        <label>What do you want help with?</label>
+        <textarea name="message" rows="4" required style="width:100%;padding:10px;margin:5px 0 12px;" placeholder="Systems, automation, marketing, funding readiness, or a combination."></textarea>
+
+        <button type="submit" class="btn-primary">Send Message</button>
+      </form>
+    </section>
+
+    <footer class="footer">
+      © <span id="year"></span> SSAG Holdings Group. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
