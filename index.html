@@ -1,116 +1,1347 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SSAG Command Center Elite</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sentinel Zero | SSAG Elite Command Center</title>
+  <style>
+    :root{
+      --bg:#071122;
+      --bg2:#0b1730;
+      --panel:#12213d;
+      --panel2:#162847;
+      --card:#1b2d4f;
+      --line:rgba(255,255,255,.08);
+      --text:#f3f7ff;
+      --muted:#a9b7d3;
+      --blue:#3b82f6;
+      --blue2:#2563eb;
+      --green:#10b981;
+      --yellow:#f59e0b;
+      --red:#ef4444;
+      --cyan:#22d3ee;
+      --shadow:0 14px 40px rgba(0,0,0,.35);
+      --radius:18px;
+    }
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial;
-  background: #0b0f19;
-  color: white;
-}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(59,130,246,.14), transparent 30%),
+        radial-gradient(circle at top left, rgba(34,211,238,.10), transparent 28%),
+        linear-gradient(180deg, #030813 0%, #071122 35%, #08152a 100%);
+    }
 
-header {
-  padding: 20px;
-  background: #111827;
-  text-align: center;
-  font-size: 22px;
-}
+    a{color:inherit;text-decoration:none}
+    button, input, select, textarea{
+      font:inherit;
+    }
 
-.container {
-  padding: 20px;
-}
+    .wrap{
+      width:min(1400px, 94%);
+      margin:0 auto;
+    }
 
-.card {
-  background: #1f2937;
-  padding: 20px;
-  margin: 10px;
-  border-radius: 12px;
-}
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(12px);
+      background:rgba(5,12,24,.82);
+      border-bottom:1px solid var(--line);
+    }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:14px 0;
+    }
 
-button {
-  padding: 10px;
-  border: none;
-  background: #2563eb;
-  color: white;
-  border-radius: 6px;
-}
-</style>
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .logo{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      background:linear-gradient(135deg, var(--blue), var(--cyan));
+      display:grid;
+      place-items:center;
+      font-weight:700;
+      color:white;
+      box-shadow:var(--shadow);
+    }
+
+    .brand h1{
+      margin:0;
+      font-size:18px;
+      line-height:1.15;
+    }
+
+    .brand p{
+      margin:3px 0 0;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .nav{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .nav button{
+      border:none;
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+
+    .nav button.active,
+    .nav button:hover{
+      background:linear-gradient(135deg, var(--blue), var(--blue2));
+    }
+
+    .hero{
+      padding:28px 0 18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:18px;
+    }
+
+    .panel{
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .hero-main{
+      padding:28px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .hero-main:before{
+      content:"";
+      position:absolute;
+      inset:auto -60px -60px auto;
+      width:220px;
+      height:220px;
+      background:radial-gradient(circle, rgba(59,130,246,.24), transparent 65%);
+      pointer-events:none;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(59,130,246,.14);
+      color:#cfe2ff;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.4px;
+      margin-bottom:12px;
+    }
+
+    .hero-main h2{
+      margin:0;
+      font-size:clamp(28px, 4vw, 46px);
+      line-height:1.04;
+    }
+
+    .hero-main p{
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.6;
+      margin:14px 0 0;
+      max-width:760px;
+    }
+
+    .hero-actions{
+      margin-top:20px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .btn{
+      border:none;
+      border-radius:12px;
+      padding:12px 16px;
+      cursor:pointer;
+      transition:.2s ease;
+      font-weight:700;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue), var(--blue2));
+      color:white;
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.06);
+      color:white;
+      border:1px solid var(--line);
+    }
+
+    .btn-green{
+      background:linear-gradient(135deg, #0ea56f, var(--green));
+      color:white;
+    }
+
+    .hero-side{
+      padding:22px;
+      display:grid;
+      gap:12px;
+      align-content:start;
+    }
+
+    .mini-stat{
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+    }
+
+    .mini-stat .label{
+      font-size:12px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.6px;
+    }
+
+    .mini-stat .value{
+      font-size:28px;
+      font-weight:700;
+      margin-top:6px;
+    }
+
+    .section{
+      display:none;
+      padding:10px 0 40px;
+    }
+
+    .section.active{
+      display:block;
+    }
+
+    .kpi-grid{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:16px;
+      margin-top:16px;
+    }
+
+    .kpi{
+      padding:20px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+
+    .kpi h3{
+      margin:0;
+      font-size:13px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.5px;
+    }
+
+    .kpi .num{
+      margin-top:12px;
+      font-size:34px;
+      font-weight:700;
+    }
+
+    .kpi .sub{
+      margin-top:8px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .main-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .card{
+      padding:20px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+
+    .card h3{
+      margin:0 0 12px;
+      font-size:20px;
+    }
+
+    .card p.helper{
+      margin:0 0 14px;
+      color:var(--muted);
+      line-height:1.55;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:12px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+    }
+
+    .field label{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .field input,
+    .field select,
+    .field textarea{
+      width:100%;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      padding:12px 12px;
+      outline:none;
+    }
+
+    .field textarea{
+      min-height:110px;
+      resize:vertical;
+    }
+
+    .field.full{
+      grid-column:1 / -1;
+    }
+
+    .action-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:space-between;
+      margin-bottom:12px;
+    }
+
+    .toolbar-left,
+    .toolbar-right{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .search{
+      min-width:240px;
+    }
+
+    .table-wrap{
+      overflow:auto;
+      border-radius:14px;
+      border:1px solid var(--line);
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:980px;
+      background:rgba(255,255,255,.02);
+    }
+
+    th, td{
+      padding:12px 12px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      vertical-align:top;
+      font-size:14px;
+    }
+
+    th{
+      position:sticky;
+      top:0;
+      background:#10203b;
+      z-index:1;
+      color:#dbe7ff;
+    }
+
+    tr:hover td{
+      background:rgba(255,255,255,.03);
+    }
+
+    .pill{
+      display:inline-block;
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      line-height:1;
+    }
+
+    .status-new{background:rgba(59,130,246,.18); color:#bfdbfe;}
+    .status-called{background:rgba(245,158,11,.18); color:#fde68a;}
+    .status-followup{background:rgba(168,85,247,.18); color:#e9d5ff;}
+    .status-closed{background:rgba(16,185,129,.18); color:#bbf7d0;}
+    .status-lost{background:rgba(239,68,68,.18); color:#fecaca;}
+
+    .temp{
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      padding:14px;
+      margin-bottom:12px;
+    }
+
+    .temp h4{
+      margin:0 0 8px;
+      font-size:16px;
+    }
+
+    .temp pre{
+      white-space:pre-wrap;
+      word-wrap:break-word;
+      color:#dce7fb;
+      line-height:1.5;
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    .copy-row{
+      margin-top:10px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .script-box{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+      line-height:1.7;
+      color:#dfe8fb;
+      margin-bottom:12px;
+    }
+
+    .website-shell{
+      overflow:hidden;
+      border-radius:22px;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      background:#081223;
+    }
+
+    .site-preview-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding:16px 20px;
+      background:#09182f;
+      border-bottom:1px solid var(--line);
+    }
+
+    .site-preview{
+      padding:34px 22px;
+      background:
+        radial-gradient(circle at top right, rgba(59,130,246,.17), transparent 30%),
+        linear-gradient(180deg, #071122 0%, #0c1b35 100%);
+    }
+
+    .site-hero{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:20px;
+      align-items:center;
+    }
+
+    .site-badge{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(34,211,238,.12);
+      color:#bff7ff;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.4px;
+    }
+
+    .site-title{
+      font-size:clamp(30px, 5vw, 54px);
+      line-height:1.02;
+      margin:14px 0;
+    }
+
+    .site-copy{
+      color:#bfd0ef;
+      line-height:1.65;
+      font-size:16px;
+      max-width:650px;
+    }
+
+    .site-buttons{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .site-metrics{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:12px;
+    }
+
+    .site-metric{
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .site-metric strong{
+      display:block;
+      font-size:28px;
+      margin-bottom:5px;
+    }
+
+    .footer-note{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:12px;
+    }
+
+    .small{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .empty{
+      color:var(--muted);
+      padding:16px 0;
+    }
+
+    @media (max-width: 1100px){
+      .hero-grid,
+      .main-grid,
+      .site-hero{
+        grid-template-columns:1fr;
+      }
+
+      .kpi-grid{
+        grid-template-columns:repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 700px){
+      .topbar-inner{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .nav{
+        width:100%;
+        justify-content:flex-start;
+      }
+
+      .kpi-grid{
+        grid-template-columns:1fr;
+      }
+
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-main,
+      .hero-side,
+      .card,
+      .kpi{
+        padding:16px;
+      }
+
+      .site-metrics{
+        grid-template-columns:1fr;
+      }
+
+      .search{
+        min-width:100%;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <div class="logo">SZ</div>
+        <div>
+          <h1>SSAG Command Center Elite</h1>
+          <p>Sentinel Zero • mobile cybersecurity revenue system</p>
+        </div>
+      </div>
 
-<header>
-SSAG COMMAND CENTER — SENTINEL ZERO
-</header>
+      <div class="nav">
+        <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+        <button class="tab-btn" data-tab="crm">CRM Tracker</button>
+        <button class="tab-btn" data-tab="automation">Automation</button>
+        <button class="tab-btn" data-tab="scripts">Call Scripts</button>
+        <button class="tab-btn" data-tab="website">Website</button>
+      </div>
+    </div>
+  </div>
 
-<div class="container">
+  <div class="wrap hero">
+    <div class="hero-grid">
+      <div class="panel hero-main">
+        <div class="eyebrow">TRUE SSAG ELITE BUILD</div>
+        <h2>Sentinel Zero Mobile Cybersecurity System</h2>
+        <p>
+          This is your live command center for prospecting, tracking leads, following up,
+          closing deals, and running the mobile phone cybersecurity offer from one place.
+          Everything on this page saves in your browser automatically.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="showTab('crm')">Add New Lead</button>
+          <button class="btn btn-secondary" onclick="showTab('automation')">Open Follow-Ups</button>
+          <button class="btn btn-green" onclick="showTab('website')">View Sales Website</button>
+        </div>
+      </div>
 
-<div class="grid">
+      <div class="panel hero-side">
+        <div class="mini-stat">
+          <div class="label">Today Focus</div>
+          <div class="value">50 Calls</div>
+        </div>
+        <div class="mini-stat">
+          <div class="label">Target</div>
+          <div class="value">2 Appointments</div>
+        </div>
+        <div class="mini-stat">
+          <div class="label">Primary Offer</div>
+          <div class="value" style="font-size:22px;">MobileShield</div>
+        </div>
+      </div>
+    </div>
+  </div><div class="wrap">
 
-<div class="card">
-<h3>Daily Calls</h3>
-<p id="calls">0</p>
-<button onclick="addCall()">+1 Call</button>
-</div>
+    <section id="dashboard" class="section active">
+      <div class="kpi-grid">
+        <div class="kpi">
+          <h3>Total Leads</h3>
+          <div class="num" id="kpiTotalLeads">0</div>
+          <div class="sub">All businesses in pipeline</div>
+        </div>
+        <div class="kpi">
+          <h3>Appointments</h3>
+          <div class="num" id="kpiAppointments">0</div>
+          <div class="sub">Status marked as follow-up / booked</div>
+        </div>
+        <div class="kpi">
+          <h3>Closed Deals</h3>
+          <div class="num" id="kpiClosedDeals">0</div>
+          <div class="sub">Leads marked closed</div>
+        </div>
+        <div class="kpi">
+          <h3>Pipeline Value</h3>
+          <div class="num" id="kpiRevenue">$0</div>
+          <div class="sub">Sum of deal values</div>
+        </div>
+      </div>
 
-<div class="card">
-<h3>Appointments</h3>
-<p id="appointments">0</p>
-<button onclick="addAppointment()">+1 Appointment</button>
-</div>
+      <div class="main-grid">
+        <div class="card">
+          <h3>Quick Add Lead</h3>
+          <p class="helper">
+            Add a prospect fast while you're calling. This saves automatically in your browser.
+          </p>
 
-<div class="card">
-<h3>Closed Deals</h3>
-<p id="deals">0</p>
-<button onclick="addDeal()">+1 Deal</button>
-</div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Business Name</label>
+              <input id="businessName" type="text" placeholder="Example: Desert Peak Plumbing" />
+            </div>
+            <div class="field">
+              <label>Phone</label>
+              <input id="businessPhone" type="text" placeholder="(602) 555-1234" />
+            </div>
+            <div class="field">
+              <label>Industry</label>
+              <input id="businessIndustry" type="text" placeholder="HVAC, Home Health, Law Firm..." />
+            </div>
+            <div class="field">
+              <label>Decision Maker</label>
+              <input id="decisionMaker" type="text" placeholder="Owner / Admin / Operations Manager" />
+            </div>
+            <div class="field">
+              <label>Status</label>
+              <select id="leadStatus">
+                <option value="New">New</option>
+                <option value="Called">Called</option>
+                <option value="Follow-Up">Follow-Up</option>
+                <option value="Closed">Closed</option>
+                <option value="Lost">Lost</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Interest Level</label>
+              <select id="interestLevel">
+                <option value="Hot">Hot</option>
+                <option value="Warm">Warm</option>
+                <option value="Cold">Cold</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Follow-Up Date</label>
+              <input id="followUpDate" type="date" />
+            </div>
+            <div class="field">
+              <label>Deal Value ($)</label>
+              <input id="dealValue" type="number" placeholder="1500" />
+            </div>
+            <div class="field full">
+              <label>Notes</label>
+              <textarea id="leadNotes" placeholder="What happened on the call? What problem did they admit to? What is the next move?"></textarea>
+            </div>
+          </div>
 
-<div class="card">
-<h3>Revenue</h3>
-<p id="revenue">$0</p>
-<button onclick="addRevenue()">+ Revenue</button>
-</div>
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="addLead()">Save Lead</button>
+            <button class="btn btn-secondary" onclick="clearLeadForm()">Clear Form</button>
+            <button class="btn btn-secondary" onclick="seedDemoData()">Load Demo Data</button>
+          </div>
+        </div>
 
-</div>
+        <div class="card">
+          <h3>Daily Operating Targets</h3>
+          <p class="helper">
+            This is the minimum standard to make the system move.
+          </p>
 
-</div>
+          <div class="script-box">
+            <strong>Morning block:</strong><br>
+            8:00 AM – 10:30 AM → 25 calls
+          </div>
 
-<script>
-let calls = 0;
-let appointments = 0;
-let deals = 0;
-let revenue = 0;
+          <div class="script-box">
+            <strong>Midday block:</strong><br>
+            11:30 AM – 1:00 PM → follow-ups, texts, callbacks
+          </div>
 
-function addCall(){
-calls++;
-document.getElementById("calls").innerText = calls;
-}
+          <div class="script-box">
+            <strong>Afternoon block:</strong><br>
+            3:30 PM – 5:30 PM → 25 more calls
+          </div>
 
-function addAppointment(){
-appointments++;
-document.getElementById("appointments").innerText = appointments;
-}
+          <div class="script-box">
+            <strong>Daily goal:</strong><br>
+            50 calls • 8–12 real conversations • 2 appointments • 1 close
+          </div>
 
-function addDeal(){
-deals++;
-document.getElementById("deals").innerText = deals;
-}
+          <div class="footer-note">
+            Everything on this page is meant to work on mobile first so you can run it from your phone.
+          </div>
+        </div>
+      </div>
+    </section>
 
-function addRevenue(){
-let amount = prompt("Enter amount:");
-revenue += parseInt(amount);
-document.getElementById("revenue").innerText = "$" + revenue;
-}
-</script>
+    <section id="crm" class="section">
+      <div class="card">
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <input id="searchInput" class="search" type="text" placeholder="Search business, phone, industry, notes..." oninput="renderLeads()" />
+            <select id="statusFilter" onchange="renderLeads()">
+              <option value="All">All Statuses</option>
+              <option value="New">New</option>
+              <option value="Called">Called</option>
+              <option value="Follow-Up">Follow-Up</option>
+              <option value="Closed">Closed</option>
+              <option value="Lost">Lost</option>
+            </select>
+            <select id="interestFilter" onchange="renderLeads()">
+              <option value="All">All Interest</option>
+              <option value="Hot">Hot</option>
+              <option value="Warm">Warm</option>
+              <option value="Cold">Cold</option>
+            </select>
+          </div>
 
+          <div class="toolbar-right">
+            <button class="btn btn-secondary" onclick="exportCSV()">Export CSV</button>
+            <button class="btn btn-secondary" onclick="showTab('dashboard')">Back to Add Lead</button>
+            <button class="btn btn-secondary" onclick="clearAllLeads()">Delete All Leads</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Business</th>
+                <th>Phone</th>
+                <th>Industry</th>
+                <th>Decision Maker</th>
+                <th>Status</th>
+                <th>Interest</th>
+                <th>Follow-Up</th>
+                <th>Deal Value</th>
+                <th>Notes</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="leadTableBody"></tbody>
+          </table>
+        </div>
+
+        <div id="crmEmpty" class="empty" style="display:none;">
+          No leads yet. Go to Dashboard and add your first lead.
+        </div>
+      </div>
+    </section>
+
+    <section id="automation" class="section">
+      <div class="main-grid">
+        <div class="card">
+          <h3>Follow-Up Templates</h3>
+          <p class="helper">
+            Tap copy and send these by text, email, or Messenger after your calls.
+          </p>
+
+          <div class="temp">
+            <h4>Template 1 — After First Call</h4>
+            <pre id="temp1">Hi [Name], this is Cezar with Sentinel Zero.
+
+Good speaking with you.
+
+We help businesses secure employee phones against phishing texts, weak logins, risky apps, and lost-device problems.
+
+If you'd like, I can walk you through the biggest mobile risks I usually find and what to lock down first.</pre>
+            <div class="copy-row">
+              <button class="btn btn-primary" onclick="copyText('temp1')">Copy</button>
+            </div>
+          </div>
+
+          <div class="temp">
+            <h4>Template 2 — Day 2 Follow-Up</h4>
+            <pre id="temp2">Quick follow-up from Sentinel Zero —
+
+Most businesses think their phones are covered until a bad text, weak login, or lost device causes a real problem.
+
+If you want, I can show you a simple mobile security review for your team.</pre>
+            <div class="copy-row">
+              <button class="btn btn-primary" onclick="copyText('temp2')">Copy</button>
+            </div>
+          </div>
+
+          <div class="temp">
+            <h4>Template 3 — Final Nudge</h4>
+            <pre id="temp3">Last quick check-in from Cezar at Sentinel Zero.
+
+If mobile security is not a priority right now, no problem.
+
+If it becomes one later, I can help you lock down employee phones, access, and lost-device response fast.</pre>
+            <div class="copy-row">
+              <button class="btn btn-primary" onclick="copyText('temp3')">Copy</button>
+            </div>
+          </div>
+        </div><div class="card">
+          <h3>Pipeline Automation Rules</h3>
+          <p class="helper">
+            Run your follow-up like a system, not random guessing.
+          </p>
+
+          <div class="script-box">
+            <strong>Day 1:</strong><br>
+            Call prospect → add to tracker → send Template 1 if they said “send info”
+          </div>
+
+          <div class="script-box">
+            <strong>Day 2:</strong><br>
+            Call again → send Template 2 if no answer
+          </div>
+
+          <div class="script-box">
+            <strong>Day 3:</strong><br>
+            Call warm leads → push for appointment
+          </div>
+
+          <div class="script-box">
+            <strong>Day 5:</strong><br>
+            Final follow-up using Template 3
+          </div>
+
+          <div class="script-box">
+            <strong>Appointment close line:</strong><br>
+            “Let’s put a quick mobile security review on the calendar so I can show you where the gaps are and what to lock down first.”
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scripts" class="section">
+      <div class="main-grid">
+        <div class="card">
+          <h3>Cold Call Script</h3>
+          <div class="script-box">
+            <strong>Opener:</strong><br>
+            “Hi, this is Cezar with Sentinel Zero. Quick question before I say why I’m calling — do your employees use their phones for any part of the business?”
+          </div>
+
+          <div class="script-box">
+            <strong>Problem frame:</strong><br>
+            “That’s exactly why I’m calling. Most businesses don’t realize their biggest security risk is actually employee phones — bad texts, weak logins, risky apps, and lost devices.”
+          </div>
+
+          <div class="script-box">
+            <strong>Discovery:</strong><br>
+            “If one of your employees clicked a bad link in a text today, what would happen?”<br><br>
+            “If a phone was lost right now, can you lock or wipe it immediately?”<br><br>
+            “Do you have any real control over what apps are being used for work?”
+          </div>
+
+          <div class="script-box">
+            <strong>Transition:</strong><br>
+            “That’s what we fix without turning your business upside down.”
+          </div>
+
+          <div class="script-box">
+            <strong>Close:</strong><br>
+            “Let’s put a quick mobile security review on the calendar. What’s better, later today or tomorrow?”
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Objection Handling</h3>
+
+          <div class="script-box">
+            <strong>“We already have IT.”</strong><br>
+            “Perfect. Most IT support handles computers and networks. Mobile is usually the blind spot. That’s where we come in.”
+          </div>
+
+          <div class="script-box">
+            <strong>“We’re too small.”</strong><br>
+            “Smaller teams usually feel one mistake harder. One bad login or phone issue can hit a small company fast.”
+          </div>
+
+          <div class="script-box">
+            <strong>“Send me something.”</strong><br>
+            “Absolutely. Before I do, what matters more to you — preventing phishing texts, controlling lost devices, or tightening employee phone access?”
+          </div>
+
+          <div class="script-box">
+            <strong>“Not interested.”</strong><br>
+            “No problem. Is that because it’s already handled well, or because it’s just not a priority right now?”
+          </div>
+
+          <div class="script-box">
+            <strong>Voicemail:</strong><br>
+            “Hi, this is Cezar with Sentinel Zero. We help businesses reduce employee phone risk — phishing texts, weak logins, bad apps, and lost-device problems. Call me back at [your number].”
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="website" class="section">
+      <div class="website-shell">
+        <div class="site-preview-top">
+          <strong>Sentinel Zero Website Preview</strong>
+          <div class="small">This is your built-in landing page preview</div>
+        </div>
+
+        <div class="site-preview">
+          <div class="site-hero">
+            <div>
+              <div class="site-badge">MOBILE CYBERSECURITY FOR BUSINESS</div>
+              <div class="site-title">Your business is exposed through employee phones.</div>
+              <div class="site-copy">
+                One bad text. One weak login. One stolen phone. That is all it takes to turn a normal workday into a business problem. Sentinel Zero helps companies lock down employee phones, access, apps, and lost-device response without making operations harder.
+              </div>
+              <div class="site-buttons">
+                <button class="btn btn-primary">Book Mobile Security Review</button>
+                <button class="btn btn-secondary">See What We Protect</button>
+              </div>
+            </div>
+
+            <div class="site-metrics">
+              <div class="site-metric">
+                <strong>Phishing</strong>
+                Text scams, fake links, account takeover attempts
+              </div>
+              <div class="site-metric">
+                <strong>Access</strong>
+                MFA, weak passwords, risky mobile login behavior
+              </div>
+              <div class="site-metric">
+                <strong>Devices</strong>
+                Lost, stolen, unmanaged, or employee-owned phones
+              </div>
+              <div class="site-metric">
+                <strong>Response</strong>
+                Lock, wipe, offboard, and mobile incident plans
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-grid" style="margin-top:18px;">
+        <div class="card">
+          <h3>Website Copy Block</h3>
+          <p class="helper">
+            Use this as the main sales message for the live site.
+          </p>
+          <div class="script-box" id="siteCopy">
+            Sentinel Zero helps businesses secure the phones employees use for work. We reduce risk from phishing texts, weak logins, unsafe apps, lost devices, and inconsistent mobile access controls. Our process starts with a mobile security review and leads into fast practical hardening, policy setup, and ongoing protection.
+          </div>
+          <div class="copy-row">
+            <button class="btn btn-primary" onclick="copyText('siteCopy')">Copy Website Copy</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Offer Stack</h3>
+          <div class="script-box">
+            <strong>Tier 1 — Rapid Lockdown</strong><br>
+            Mobile security review, MFA/password hardening, quick risk report
+          </div>
+          <div class="script-box">
+            <strong>Tier 2 — Business Protection</strong><br>
+            Tier 1 plus policy setup, app cleanup, lost-device response, staff guidance
+          </div>
+          <div class="script-box">
+            <strong>Tier 3 — Managed Mobile Security</strong><br>
+            Ongoing support, device control, routine checks, incident response help
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><script>
+    const STORAGE_KEY = "ssag_sentinel_zero_leads_v2";
+    let leads = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+    function saveLeads(){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+      updateKPIs();
+      renderLeads();
+    }
+
+    function showTab(tabId){
+      document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("active");
+      });
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.classList.remove("active");
+      });
+
+      document.getElementById(tabId).classList.add("active");
+      const activeBtn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+      if(activeBtn) activeBtn.classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => showTab(btn.dataset.tab));
+    });
+
+    function addLead(){
+      const businessName = document.getElementById("businessName").value.trim();
+      const businessPhone = document.getElementById("businessPhone").value.trim();
+      const businessIndustry = document.getElementById("businessIndustry").value.trim();
+      const decisionMaker = document.getElementById("decisionMaker").value.trim();
+      const leadStatus = document.getElementById("leadStatus").value;
+      const interestLevel = document.getElementById("interestLevel").value;
+      const followUpDate = document.getElementById("followUpDate").value;
+      const dealValue = document.getElementById("dealValue").value.trim();
+      const leadNotes = document.getElementById("leadNotes").value.trim();
+
+      if(!businessName){
+        alert("Enter the business name first.");
+        return;
+      }
+
+      leads.unshift({
+        id: Date.now(),
+        businessName,
+        businessPhone,
+        businessIndustry,
+        decisionMaker,
+        leadStatus,
+        interestLevel,
+        followUpDate,
+        dealValue: Number(dealValue || 0),
+        leadNotes
+      });
+
+      saveLeads();
+      clearLeadForm();
+      showTab("crm");
+    }
+
+    function clearLeadForm(){
+      document.getElementById("businessName").value = "";
+      document.getElementById("businessPhone").value = "";
+      document.getElementById("businessIndustry").value = "";
+      document.getElementById("decisionMaker").value = "";
+      document.getElementById("leadStatus").value = "New";
+      document.getElementById("interestLevel").value = "Hot";
+      document.getElementById("followUpDate").value = "";
+      document.getElementById("dealValue").value = "";
+      document.getElementById("leadNotes").value = "";
+    }
+
+    function statusClass(status){
+      if(status === "New") return "status-new";
+      if(status === "Called") return "status-called";
+      if(status === "Follow-Up") return "status-followup";
+      if(status === "Closed") return "status-closed";
+      return "status-lost";
+    }
+
+    function renderLeads(){
+      const tbody = document.getElementById("leadTableBody");
+      const crmEmpty = document.getElementById("crmEmpty");
+      const search = (document.getElementById("searchInput")?.value || "").toLowerCase();
+      const statusFilter = document.getElementById("statusFilter")?.value || "All";
+      const interestFilter = document.getElementById("interestFilter")?.value || "All";
+
+      const filtered = leads.filter(lead => {
+        const blob = [
+          lead.businessName,
+          lead.businessPhone,
+          lead.businessIndustry,
+          lead.decisionMaker,
+          lead.leadStatus,
+          lead.interestLevel,
+          lead.followUpDate,
+          lead.dealValue,
+          lead.leadNotes
+        ].join(" ").toLowerCase();
+
+        const matchesSearch = blob.includes(search);
+        const matchesStatus = statusFilter === "All" || lead.leadStatus === statusFilter;
+        const matchesInterest = interestFilter === "All" || lead.interestLevel === interestFilter;
+
+        return matchesSearch && matchesStatus && matchesInterest;
+      });
+
+      tbody.innerHTML = "";
+
+      if(filtered.length === 0){
+        crmEmpty.style.display = "block";
+      } else {
+        crmEmpty.style.display = "none";
+      }
+
+      filtered.forEach(lead => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${escapeHtml(lead.businessName)}</strong></td>
+          <td>${escapeHtml(lead.businessPhone || "")}</td>
+          <td>${escapeHtml(lead.businessIndustry || "")}</td>
+          <td>${escapeHtml(lead.decisionMaker || "")}</td>
+          <td><span class="pill ${statusClass(lead.leadStatus)}">${escapeHtml(lead.leadStatus)}</span></td>
+          <td>${escapeHtml(lead.interestLevel || "")}</td>
+          <td>${escapeHtml(lead.followUpDate || "")}</td>
+          <td>$${Number(lead.dealValue || 0).toLocaleString()}</td>
+          <td>${escapeHtml(lead.leadNotes || "")}</td>
+          <td>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn btn-secondary" onclick="editLead(${lead.id})">Edit</button>
+              <button class="btn btn-secondary" onclick="deleteLead(${lead.id})">Delete</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function editLead(id){
+      const lead = leads.find(x => x.id === id);
+      if(!lead) return;
+
+      document.getElementById("businessName").value = lead.businessName || "";
+      document.getElementById("businessPhone").value = lead.businessPhone || "";
+      document.getElementById("businessIndustry").value = lead.businessIndustry || "";
+      document.getElementById("decisionMaker").value = lead.decisionMaker || "";
+      document.getElementById("leadStatus").value = lead.leadStatus || "New";
+      document.getElementById("interestLevel").value = lead.interestLevel || "Hot";
+      document.getElementById("followUpDate").value = lead.followUpDate || "";
+      document.getElementById("dealValue").value = lead.dealValue || "";
+      document.getElementById("leadNotes").value = lead.leadNotes || "";
+
+      leads = leads.filter(x => x.id !== id);
+      saveLeads();
+      showTab("dashboard");
+    }
+
+    function deleteLead(id){
+      if(!confirm("Delete this lead?")) return;
+      leads = leads.filter(x => x.id !== id);
+      saveLeads();
+    }
+
+    function clearAllLeads(){
+      if(!confirm("Delete ALL leads? This cannot be undone.")) return;
+      leads = [];
+      saveLeads();
+    }
+
+    function updateKPIs(){
+      const totalLeads = leads.length;
+      const appointments = leads.filter(x => x.leadStatus === "Follow-Up").length;
+      const closedDeals = leads.filter(x => x.leadStatus === "Closed").length;
+      const revenue = leads.reduce((sum, x) => sum + Number(x.dealValue || 0), 0);
+
+      document.getElementById("kpiTotalLeads").textContent = totalLeads;
+      document.getElementById("kpiAppointments").textContent = appointments;
+      document.getElementById("kpiClosedDeals").textContent = closedDeals;
+      document.getElementById("kpiRevenue").textContent = "$" + revenue.toLocaleString();
+    }
+
+    function exportCSV(){
+      if(leads.length === 0){
+        alert("No leads to export yet.");
+        return;
+      }
+
+      const headers = [
+        "Business Name",
+        "Phone",
+        "Industry",
+        "Decision Maker",
+        "Status",
+        "Interest Level",
+        "Follow-Up Date",
+        "Deal Value",
+        "Notes"
+      ];
+
+      const rows = leads.map(lead => [
+        lead.businessName || "",
+        lead.businessPhone || "",
+        lead.businessIndustry || "",
+        lead.decisionMaker || "",
+        lead.leadStatus || "",
+        lead.interestLevel || "",
+        lead.followUpDate || "",
+        lead.dealValue || 0,
+        lead.leadNotes || ""
+      ]);
+
+      const csv = [headers, ...rows]
+        .map(row => row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(","))
+        .join("\n");
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "sentinel-zero-leads.csv";
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function copyText(elementId){
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Copied.");
+      }).catch(() => {
+        alert("Copy failed. Try again.");
+      });
+    }
+
+    function seedDemoData(){
+      if(leads.length > 0){
+        const go = confirm("Demo data will add sample leads. Continue?");
+        if(!go) return;
+      }
+
+      const demo = [
+        {
+          id: Date.now() + 1,
+          businessName: "Desert Peak Plumbing",
+          businessPhone: "(602) 555-0148",
+          businessIndustry: "Plumbing",
+          decisionMaker: "Owner",
+          leadStatus: "Called",
+          interestLevel: "Warm",
+          followUpDate: "2026-04-10",
+          dealValue: 1500,
+          leadNotes: "Uses employee phones for dispatch and billing."
+        },
+        {
+          id: Date.now() + 2,
+          businessName: "Canyon Home Health",
+          businessPhone: "(602) 555-0117",
+          businessIndustry: "Home Health",
+          decisionMaker: "Administrator",
+          leadStatus: "Follow-Up",
+          interestLevel: "Hot",
+          followUpDate: "2026-04-09",
+          dealValue: 3500,
+          leadNotes: "Concerned about lost devices and staff mobile access."
+        },
+        {
+          id: Date.now() + 3,
+          businessName: "Valley Legal Group",
+          businessPhone: "(602) 555-0192",
+          businessIndustry: "Law Firm",
+          decisionMaker: "Office Manager",
+          leadStatus: "Closed",
+          interestLevel: "Hot",
+          followUpDate: "2026-04-08",
+          dealValue: 5000,
+          leadNotes: "Wants mobile security review and policy setup."
+        }
+      ];
+
+      leads = [...demo, ...leads];
+      saveLeads();
+      showTab("crm");
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    updateKPIs();
+    renderLeads();
+  </script>
 </body>
 </html>
