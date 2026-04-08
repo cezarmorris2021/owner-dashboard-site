@@ -1,136 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>SSAG Owner Dashboard – Enterprise Control Panel</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Owner dashboard for SSAG Holdings Group and its brands.">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSAG Command Center Elite</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0b0f19;
+  color: white;
+}
+
+header {
+  padding: 20px;
+  background: #111827;
+  text-align: center;
+  font-size: 22px;
+}
+
+.container {
+  padding: 20px;
+}
+
+.card {
+  background: #1f2937;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+button {
+  padding: 10px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  border-radius: 6px;
+}
+</style>
 </head>
 
 <body>
-  <div class="container">
 
-    <header>
-      <h1>SSAG Owner Dashboard</h1>
-      <p>Your personal control panel for SSAG Holdings, AscendEdge Media Group, and EdgeForce Digital Capital.</p>
+<header>
+SSAG COMMAND CENTER — SENTINEL ZERO
+</header>
 
-      <nav class="nav">
-        <a href="#sites">Live Sites</a>
-        <a href="#docs">Key Docs</a>
-        <a href="#tasks">Key Actions</a>
-      </nav>
-    </header>
+<div class="container">
 
-    <section id="sites" class="hero">
-      <h2>Live Websites</h2>
-      <p>All your public-facing sites in one place for quick access.</p>
+<div class="grid">
 
-      <div class="grid grid-3" style="margin-top:1.5rem;">
-        <div class="card">
-          <span class="badge">Parent Hub</span>
-          <h4>SSAG Holdings Group</h4>
-          <p>Main public hub that points to all brands.</p>
-          <p class="price">
-            <a href="https://cezarmorris2021.github.io/ssag-hub-site/" target="_blank">Open Hub →</a>
-          </p>
-        </div>
+<div class="card">
+<h3>Daily Calls</h3>
+<p id="calls">0</p>
+<button onclick="addCall()">+1 Call</button>
+</div>
 
-        <div class="card">
-          <span class="badge">Marketing Agency</span>
-          <h4>AscendEdge Media Group</h4>
-          <p>Public site for your marketing systems and packages.</p>
-          <p class="price">
-            <a href="https://cezarmorris2021.github.io/ascendedge-site/" target="_blank">Open AscendEdge →</a>
-          </p>
-        </div>
+<div class="card">
+<h3>Appointments</h3>
+<p id="appointments">0</p>
+<button onclick="addAppointment()">+1 Appointment</button>
+</div>
 
-        <div class="card">
-          <span class="badge">Funding Advisory</span>
-          <h4>EdgeForce Digital Capital</h4>
-          <p>Public site for funding readiness and business credit education.</p>
-          <p class="price">
-            <a href="https://cezarmorris2021.github.io/edgeforce-site/" target="_blank">Open EdgeForce →</a>
-          </p>
-        </div>
-      </div>
-    </section>
+<div class="card">
+<h3>Closed Deals</h3>
+<p id="deals">0</p>
+<button onclick="addDeal()">+1 Deal</button>
+</div>
 
-    <section id="docs" class="section">
-      <h3>Key Documents (placeholders for now)</h3>
-      <p class="lead">
-        When you upload PDFs or docs (Google Drive, Dropbox, etc.), you can link them here
-        so everything you own is one click away.
-      </p>
+<div class="card">
+<h3>Revenue</h3>
+<p id="revenue">$0</p>
+<button onclick="addRevenue()">+ Revenue</button>
+</div>
 
-      <div class="grid grid-2">
-        <div class="card">
-          <h4>Company Overviews & Roles</h4>
-          <ul style="margin-left:1.2rem;font-size:0.9rem;">
-            <li>SSAG Overview & Roles – (add link)</li>
-            <li>AscendEdge Overview & Roles – (add link)</li>
-            <li>EdgeForce Overview & Roles – (add link)</li>
-          </ul>
-        </div>
+</div>
 
-        <div class="card">
-          <h4>Franchise & Ownership</h4>
-          <ul style="margin-left:1.2rem;font-size:0.9rem;">
-            <li>Franchise & Ownership Portfolio – (add link)</li>
-            <li>Franchise Kits (SSAG / AscendEdge / EdgeForce)</li>
-            <li>Licensing Agreement Drafts</li>
-          </ul>
-        </div>
+</div>
 
-        <div class="card">
-          <h4>Outreach & Systems</h4>
-          <ul style="margin-left:1.2rem;font-size:0.9rem;">
-            <li>Outreach message templates</li>
-            <li>Lead & pipeline tracking sheet</li>
-            <li>Client onboarding checklists</li>
-          </ul>
-        </div>
+<script>
+let calls = 0;
+let appointments = 0;
+let deals = 0;
+let revenue = 0;
 
-        <div class="card">
-          <h4>Future Assets</h4>
-          <ul style="margin-left:1.2rem;font-size:0.9rem;">
-            <li>YouTube channel info</li>
-            <li>Brand kits and logos</li>
-            <li>Any new divisions you launch</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+function addCall(){
+calls++;
+document.getElementById("calls").innerText = calls;
+}
 
-    <section id="tasks" class="section">
-      <h3>High-Impact Actions</h3>
-      <p class="lead">Use this as your quick “do this now” list when you log in.</p>
+function addAppointment(){
+appointments++;
+document.getElementById("appointments").innerText = appointments;
+}
 
-      <div class="grid grid-2">
-        <div class="card">
-          <h4>Daily / Weekly Actions</h4>
-          <ul style="margin-left:1.2rem;font-size:0.9rem;">
-            <li>Send 3–5 outreach messages about SSAG / AscendEdge / EdgeForce.</li>
-            <li>Check email for new form submissions from any site.</li>
-            <li>Update your leads & pipeline spreadsheet.</li>
-          </ul>
-        </div>
+function addDeal(){
+deals++;
+document.getElementById("deals").innerText = deals;
+}
 
-        <div class="card">
-          <h4>Build & Scale</h4>
-          <ul style="margin-left:1.2rem;font-size:0.9rem;">
-            <li>Refine your top 1–2 offers for each company.</li>
-            <li>Add one new asset per week (PDF, script, template, or page).</li>
-            <li>Identify potential partners, referral sources, or franchise buyers.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+function addRevenue(){
+let amount = prompt("Enter amount:");
+revenue += parseInt(amount);
+document.getElementById("revenue").innerText = "$" + revenue;
+}
+</script>
 
-    <footer class="footer">
-      Internal Owner Dashboard for SSAG Holdings Group. Not intended for public traffic.
-    </footer>
-
-  </div>
 </body>
 </html>
